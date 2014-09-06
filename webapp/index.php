@@ -4,19 +4,7 @@ require_once('classes/CBR/Currency.php');
 $cbrCurrency = new \CBR\Currency();
 $out = $cbrCurrency->getData();
 
-$dollar = '';
-$euro = '';
-
-var_dump($out);
-
-foreach ($out as $cur) {
-    if ($cur[2] == 840) {
-        $dollar = str_replace(',', '.', $cur[4]);
-    }
-    if ($cur[2] == 978) {
-        $euro = str_replace(',', '.', $cur[4]);
-    }
-}
-
-echo "Доллар - " . $dollar . "<br />";
-echo "Евро - " . $euro . "<br />";
+echo '<meta charset="utf-8" />';
+echo '<h1>Курс валют на '.$cbrCurrency->getDate().'</h1>';
+echo "<h2>Доллар - " . $cbrCurrency->getDollar() . "</h2>";
+echo "<h2>Евро - " . $cbrCurrency->getEuro() . "</h2>";
