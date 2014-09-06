@@ -9,10 +9,27 @@ namespace CBR;
 
 class Currency {
 
+    private $data;
+    private $rawData;
+
+    public function getData()
+    {
+        $this->fetchData();
+        $this->parseData();
+        return $this->data;
+    }
+
+    private function parseData()
+    {
+        $pattern = "{<Valute ID=\"([^\"]+)[^>]+>[^>]+>([^<]+)[^>]+>[^>]+>[^>]+>[^>]+>[^>]+>[^>]+>([^<]+)[^>]+>[^>]+>([^<]+)}i";
+        preg_match_all($pattern, $this->rawData, $this->data, PREG_SET_ORDER);
+    }
+
     /**
      * Получаем текущие курсы валют в rss-формате с сайта www.cbr.ru
      */
-    public function fetchData() {
+    private function fetchData()
+    {
         // Формируем сегодняшнюю дату
         $date = date("d/m/Y");
 
@@ -27,11 +44,10 @@ class Currency {
         }
         else {
             // Чтение содержимого файла в переменную $text
-            while (! feof($fd)) $text .= fgets($fd, 4096);
+            while (! feof($fd)) $this->rawData .= fgets($fd, 4096);
         }
 
         // Закрыть открытый файловый дескриптор
-        fclose ($fd);
-        return $text;
+        fclose($fd);
     }
 }

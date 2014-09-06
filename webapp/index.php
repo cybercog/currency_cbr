@@ -2,12 +2,7 @@
 
 require_once('classes/CBR/Currency.php');
 $cbrCurrency = new \CBR\Currency();
-$content = $cbrCurrency->fetchData();
-
-// Разбираем содержимое, при помощи регулярных выражений
-$pattern = "{<Valute ID=\"([^\"]+)[^>]+>[^>]+>([^<]+)[^>]+>[^>]+>[^>]+>[^>]+>[^>]+>[^>]+>([^<]+)[^>]+>[^>]+>([^<]+)}i";
-
-preg_match_all($pattern, $content, $out, PREG_SET_ORDER);
+$out = $cbrCurrency->getData();
 
 $dollar = '';
 $euro = '';
